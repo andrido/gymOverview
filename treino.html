@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracker: Foco & Recuperação</title>
+    <style>
+        :root {
+            --primary: #27ae60;
+            --danger: #e74c3c;
+            --dark: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            padding-bottom: 2rem;
+        }
+
+        header {
+            background: var(--dark);
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 0.6rem 1.2rem;
+            cursor: pointer;
+            background: #e0e0e0;
+            border-radius: 4px;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        h2 {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            border-left: 5px solid var(--primary);
+            padding-left: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .alert-box {
+            background: #ffebee;
+            border: 1px solid #ef9a9a;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        .list {
+            list-style: none;
+        }
+
+        .list-item {
+            background: #fff;
+            margin-bottom: 0.8rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .list-item:hover {
+            transform: translateX(3px);
+        }
+
+        .list-item input {
+            margin-right: 1rem;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            font-weight: bold;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+
+        .item-detail {
+            font-size: 0.85rem;
+            color: #555;
+            margin-top: 2px;
+        }
+
+        .progress-container {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        progress {
+            width: 60%;
+            height: 1.2rem;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        progress::-webkit-progress-bar {
+            background-color: #eee;
+        }
+
+        progress::-webkit-progress-value {
+            background-color: var(--primary);
+        }
+
+        .button-group {
+            text-align: right;
+            margin-top: 0.5rem;
+        }
+
+        button {
+            background: var(--dark);
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .treino-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .treino-btn {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            background: #fff;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .treino-btn.active-day {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>📋 Tracker: Projeto 2024</h1>
+        <p style="font-size: 0.8rem; opacity: 0.8; margin-top: 5px;">Versão Segura (Sem Testa/Francês)</p>
+    </header>
+
+    <div class="tabs">
+        <div class="tab active" onclick="openTab('treino', this)">Treino (Gym)</div>
+        <div class="tab" onclick="openTab('casa', this)">Mobilidade (Casa)</div>
+        <div class="tab" onclick="openTab('nutricao', this)">Nutrição</div>
+    </div>
+
+    <main>
+        <section id="treino" class="active">
+            <div class="alert-box">
+                ⚠️ <strong>Dica de Ouro:</strong> No tríceps pulley, mantenha os ombros baixos (longe da orelha) para
+                não ativar o trapézio/cervical.
+            </div>
+
+            <div class="treino-selector">
+                <div class="treino-btn active-day" onclick="renderTreino('A')">A: Empurrar</div>
+                <div class="treino-btn" onclick="renderTreino('B')">B: Puxar</div>
+                <div class="treino-btn" onclick="renderTreino('C')">C: Pernas</div>
+            </div>
+
+            <h2 id="treinoTitle">Treino A</h2>
+            <div class="progress-container">
+                <label><span id="treinoProgressText">0%</span> Concluído</label>
+                <progress id="treinoProgressBar" value="0" max="100"></progress>
+            </div>
+            <ul id="treino-list" class="list"></ul>
+            <div class="button-group">
+                <button onclick="clearCurrentTreino()">Limpar Dia</button>
+            </div>
+        </section>
+
+        <section id="casa">
+            <h2>Mobilidade e Core</h2>
+            <p class="subtitle">Faça nos dias sem academia para aliviar a coluna.</p>
+            <div class="progress-container">
+                <label><span id="casaProgressText">0%</span></label>
+                <progress id="casaProgressBar" value="0" max="100"></progress>
+            </div>
+            <ul id="casa-list" class="list"></ul>
+            <div class="button-group">
+                <button
+                    onclick="clearList('casa-list', 'casaDone', 'casaProgressBar', 'casaProgressText', casaList)">Limpar</button>
+            </div>
+        </section>
+
+        <section id="nutricao">
+            <h2>Dieta de Superávit</h2>
+            <div class="progress-container">
+                <label><span id="dietProgressText">0%</span></label>
+                <progress id="dietProgressBar" value="0" max="100"></progress>
+            </div>
+            <ul id="diet-list" class="list"></ul>
+            <div class="button-group">
+                <button
+                    onclick="clearList('diet-list', 'dietDone', 'dietProgressBar', 'dietProgressText', dietSchedule)">Limpar
+                    Dia</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- DADOS ATUALIZADOS (TROCA DO TESTA PELO PULLEY BARRA) ---
+        const treinoA = [
+            { title: 'Supino Reto (Halter ou Barra)', detail: '3x10-12 (Cabeça apoiada! Foco peitoral)' },
+            { title: 'Supino Inclinado (Halter)', detail: '3x10-12 (Preenche a parte superior do peito)' },
+            { title: 'Crucifixo (Máquina ou Halter)', detail: '3x12-15 (Alongue bem o peito na descida)' },
+            { title: 'Elevação Lateral', detail: '3x12-15 (Ombros largos. Não suba acima do ombro)' },
+            { title: 'Tríceps Corda', detail: '3x12-15 (Esmague o tríceps embaixo, abrindo a corda no final)' },
+            { title: 'Tríceps Pulley (Barra Reta)', detail: '3x12 (Em pé. Substitui o testa com segurança total)' },
+            { title: 'Prancha Abdominal', detail: '3x30-45s (Isometria para o core)' }
+        ];
+
+        const treinoB = [
+            { title: 'Puxador (Polia Alta)', detail: '3x10-12 (Puxe no peito, NÃO na nuca)' },
+            { title: 'Remada Máquina (Peito Apoiado)', detail: '3x12 (Protege sua lombar e cervical)' },
+            { title: 'Remada Unilateral (Serrote)', detail: '3x12 (Apoie bem a mão no banco)' },
+            { title: 'Extensão de Ombro (Polia)', detail: '3x12-15 (Braços esticados, foco na asa)' },
+            { title: 'Rosca Direta (Barra W)', detail: '3x10-12 (Sem roubar com as costas)' },
+            { title: 'Rosca Martelo', detail: '3x12 (Foco na lateral do braço)' },
+            { title: 'Rosca Punho (Antebraço)', detail: '3x15 (Apoie o braço no banco)' },
+            { title: 'Bird-Dog (Perdigueiro)', detail: '3x10 (Obrigatório para sua hérnia)' }
+        ];
+
+        const treinoC = [
+            { title: 'Leg Press 45º', detail: '3x10-12 (Pés na largura do ombro. Cabeça no encosto)' },
+            { title: 'Avanço (Passada)', detail: '3x10 cada perna (Cuidado com o equilíbrio)' },
+            { title: 'Cadeira Extensora', detail: '3x12-15 (Segure 1s lá em cima)' },
+            { title: 'Mesa Flexora', detail: '3x12-15 (Foco no posterior de coxa)' },
+            { title: 'Cadeira Abdutora', detail: '3x15-20 (Para alargar o quadril)' },
+            { title: 'Elevação Pélvica', detail: '3x12-15 (Contraia forte o glúteo)' },
+            { title: 'Panturrilha Sentado', detail: '3x15-20 (Amplitude máxima)' },
+            { title: 'Panturrilha em Pé', detail: '3x15-20' }
+        ];
+
+        const casaList = [
+            { title: 'Gato-Vaca (Mobilidade)', detail: '1 min (Alivia tensão cervical)' },
+            { title: 'Rotação Torácica (Deitado)', detail: '3x10 cada lado' },
+            { title: 'Bird-Dog (Perdigueiro)', detail: '3x10 cada lado (Estabilidade)' },
+            { title: 'Prancha Frontal', detail: '3 séries de máx tempo' },
+            { title: 'Abdominal Supra (Curto)', detail: '3x20 (Não puxe o pescoço)' }
+        ];
+
+        const dietSchedule = [
+            { time: '06:00', title: 'Café da manhã', detail: 'Cuscuz + 3 ovos + café com leite' },
+            { time: '08:30', title: 'Lanche 1', detail: 'Banana + aveia + 2 scoops hipercalórico' },
+            { time: '10:30', title: 'Lanche 2', detail: 'Sanduíche atum/ricota + 1 scoop hipercalórico' },
+            { time: '12:30', title: 'Almoço', detail: 'Arroz + feijão + proteína + salada + azeite' },
+            { time: '15:30', title: 'Pós-refeição', detail: 'Whey + Creatina' },
+            { time: '17:30', title: 'Jantar (RU)', detail: 'Refeição completa + fruta' },
+            { time: '22:00', title: 'Ceia', detail: 'Mingau + hipercalórico + leite' }
+        ];
+
+        let currentTreinoKey = 'treinoA';
+
+        // --- LÓGICA ---
+        function openTab(tabName, element) {
+            document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            if (element) element.classList.add('active');
+        }
+
+        function renderTreino(type) {
+            const titleMap = { 'A': 'Treino A: Empurrar', 'B': 'Treino B: Puxar', 'C': 'Treino C: Pernas' };
+            const dataMap = { 'A': treinoA, 'B': treinoB, 'C': treinoC };
+
+            document.querySelectorAll('.treino-btn').forEach(btn => {
+                btn.classList.remove('active-day');
+                if (btn.textContent.includes(type)) btn.classList.add('active-day');
+            });
+
+            document.getElementById('treinoTitle').innerText = titleMap[type];
+            currentTreinoKey = 'treino' + type;
+
+            renderGenericList('treino-list', dataMap[type], currentTreinoKey + 'Done', 'treinoProgressBar', 'treinoProgressText');
+        }
+
+        function renderGenericList(listId, data, storageKey, barId, textId) {
+            const cont = document.getElementById(listId);
+            if (!cont) return;
+            const saved = JSON.parse(localStorage.getItem(storageKey)) || {};
+            cont.innerHTML = '';
+
+            data.forEach((item, i) => {
+                const li = document.createElement('li'); li.className = 'list-item';
+                const cb = document.createElement('input'); cb.type = 'checkbox';
+                cb.checked = saved[i] || false;
+                cb.onchange = () => {
+                    const s = JSON.parse(localStorage.getItem(storageKey)) || {};
+                    s[i] = !s[i];
+                    localStorage.setItem(storageKey, JSON.stringify(s));
+                    updateProgress(data, storageKey, barId, textId);
+                };
+
+                const div = document.createElement('div'); div.className = 'item-content';
+                const t = document.createElement('div'); t.className = 'item-title';
+                t.innerText = item.time ? `${item.time} - ${item.title}` : item.title;
+                const d = document.createElement('div'); d.className = 'item-detail';
+                d.innerText = item.detail;
+
+                div.appendChild(t); div.appendChild(d);
+                li.appendChild(cb); li.appendChild(div);
+                cont.appendChild(li);
+            });
+            updateProgress(data, storageKey, barId, textId);
+        }
+
+        function updateProgress(data, key, barId, textId) {
+            const saved = JSON.parse(localStorage.getItem(key)) || {};
+            const done = Object.values(saved).filter(v => v).length;
+            const pct = Math.round((done / data.length) * 100);
+            const bar = document.getElementById(barId);
+            const txt = document.getElementById(textId);
+            if (bar) bar.value = pct;
+            if (txt) txt.innerText = pct + '%';
+        }
+
+        function clearCurrentTreino() {
+            localStorage.removeItem(currentTreinoKey + 'Done');
+            const currentType = currentTreinoKey.replace('treino', '');
+            renderTreino(currentType);
+        }
+
+        function clearList(listId, key, bar, text, data) {
+            localStorage.removeItem(key);
+            renderGenericList(listId, data, key, bar, text);
+        }
+
+        renderTreino('A');
+        renderGenericList('casa-list', casaList, 'casaDone', 'casaProgressBar', 'casaProgressText');
+        renderGenericList('diet-list', dietSchedule, 'dietDone', 'dietProgressBar', 'dietProgressText');
+    </script>
+</body>
+
+</html>
