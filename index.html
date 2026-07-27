@@ -11,7 +11,6 @@
             --danger: #e74c3c;
             --dark: #2c3e50;
             --accent: #2980b9;
-            --calistenia: #8e44ad;
         }
 
         * {
@@ -235,7 +234,7 @@
             font-weight: bold;
         }
 
-        /* --- ESTILOS DA ABA NUTRIÇÃO --- */
+        /* ESTILOS DA ABA NUTRIÇÃO */
         .meal-card {
             background: #fff;
             border-radius: 8px;
@@ -361,8 +360,7 @@
 
     <div class="tabs">
         <div class="tab active" onclick="openTab('treino', this)">Treino (Gym)</div>
-        <div class="tab" onclick="openTab('calistenia', this)">Calistenia</div>
-        <div class="tab" onclick="openTab('casa', this)">Mobilidade (Casa)</div>
+        <div class="tab" onclick="openTab('casa', this)">Mobilidade (Diário - 15min)</div>
         <div class="tab" onclick="openTab('nutricao', this)">Nutrição (Plano PDF)</div>
     </div>
 
@@ -391,34 +389,20 @@
             </div>
         </section>
 
-        <!-- ABA CALISTENIA -->
-        <section id="calistenia">
-            <h2>Treino de Calistenia (Peso do Corpo)</h2>
-            <p class="subtitle">Exercícios para força, hipertrofia e controle corporal sem equipamentos pesados.</p>
-            <div class="progress-container">
-                <label><span id="calisteniaProgressText">0%</span> Concluído</label>
-                <progress id="calisteniaProgressBar" value="0" max="100"></progress>
-            </div>
-            <ul id="calistenia-list" class="list"></ul>
-            <div class="button-group">
-                <button
-                    onclick="clearList('calistenia-list', 'calisteniaDone', 'calisteniaProgressBar', 'calisteniaProgressText', calisteniaList)">Limpar
-                    Dia</button>
-            </div>
-        </section>
-
-        <!-- ABA MOBILIDADE CASA -->
+        <!-- ABA MOBILIDADE CASA (ROTINA DIÁRIA 15 MIN) -->
         <section id="casa">
-            <h2>Mobilidade e Core</h2>
-            <p class="subtitle">Faça nos dias sem academia para aliviar a coluna.</p>
+            <h2>Mobilidade & Alívio Diário (15 Min)</h2>
+            <p class="subtitle">Faça preferencialmente todos os dias para descomprimir a cervical e alinhar a postura.
+            </p>
             <div class="progress-container">
-                <label><span id="casaProgressText">0%</span></label>
+                <label><span id="casaProgressText">0%</span> Concluído</label>
                 <progress id="casaProgressBar" value="0" max="100"></progress>
             </div>
             <ul id="casa-list" class="list"></ul>
             <div class="button-group">
                 <button
-                    onclick="clearList('casa-list', 'casaDone', 'casaProgressBar', 'casaProgressText', casaList)">Limpar</button>
+                    onclick="clearList('casa-list', 'casaDone', 'casaProgressBar', 'casaProgressText', casaList)">Limpar
+                    Dia</button>
             </div>
         </section>
 
@@ -633,7 +617,7 @@
     </main>
 
     <script>
-        // --- DATA TREINOS, CALISTENIA E CASA ---
+        // --- DADOS DOS TREINOS ---
         const treinoA = [
             { title: 'Supino Reto (Halter ou Barra)', detail: '3x10-12 (Cabeça apoiada! Foco peitoral)' },
             { title: 'Supino Inclinado (Halter)', detail: '3x10-12 (Preenche a parte superior do peito)' },
@@ -667,22 +651,12 @@
             { title: 'Panturrilha Sentado/Polia 45º', detail: '3x15-20 (Joelhos estendidos, amplitude máxima)' }
         ];
 
-        const calisteniaList = [
-            { title: 'Flexão de Braço (Inclinada ou Tradicional)', detail: '3x10-12 (Corpo alinhado em prancha, cotovelos a 45º)' },
-            { title: 'Flexão Diamante ou Fechada no Banco', detail: '3x10 (Foco em tríceps sem sobrecarregar o ombro)' },
-            { title: 'Agachamento Livre (Bodyweight)', detail: '3x15-20 (Pés bem apoiados, tronco ereto)' },
-            { title: 'Afundo Unilateral Estático', detail: '3x12 cada perna (Foco no equilíbrio e quadríceps/glúteo)' },
-            { title: 'Elevação Pélvica Unilateral no Chão', detail: '3x12 cada lado (Contraia forte o glúteo 2s no topo)' },
-            { title: 'Remada Invertida na Mesa/Barra (Inverted Row)', detail: '3x10 (Escápulas fechadas, fortalece as costas/postura)' },
-            { title: 'Panturrilha Unilateral no Degrau', detail: '3x15-20 cada perna (Alongue bem embaixo e suba no topo)' }
-        ];
-
         const casaList = [
-            { title: 'Gato-Vaca (Mobilidade)', detail: '1 min (Alivia tensão cervical)' },
-            { title: 'Rotação Torácica (Deitado)', detail: '3x10 cada lado' },
-            { title: 'Bird-Dog (Perdigueiro)', detail: '3x10 cada lado (Estabilidade)' },
-            { title: 'Prancha Frontal', detail: '3 séries de máx tempo' },
-            { title: 'Abdominal Supra (Curto)', detail: '3x20 (Não puxe o pescoço)' }
+            { title: 'Gato-Vaca (Descompressão da Coluna)', detail: '1 min (Inspire selando as costas, expire arredondando suavemente)' },
+            { title: 'Rotação Torácica de Deitado', detail: '3x10 cada lado (Abre o peitoral e destrava a torácica sem girar o pescoço)' },
+            { title: 'Bird-Dog / Perdigueiro (Estabilidade)', detail: '3x10 cada lado (Braço e perna opostos. Coluna $100\%$ firme e neutra)' },
+            { title: 'Prancha Frontal Isotratada', detail: '3x30-45s (Empurre o chão com os cotovelos, ative o abdômen)' },
+            { title: 'Alongamento de Peitoral no Batente da Porta', detail: '3x30s cada lado (Alivia ombros caídos para a frente e tensão cervical)' }
         ];
 
         let currentTreinoKey = 'treinoA';
@@ -808,7 +782,6 @@
 
         // Inicializações
         renderTreino('A');
-        renderGenericList('calistenia-list', calisteniaList, 'calisteniaDone', 'calisteniaProgressBar', 'calisteniaProgressText');
         renderGenericList('casa-list', casaList, 'casaDone', 'casaProgressBar', 'casaProgressText');
         updateDietProgress();
     </script>
