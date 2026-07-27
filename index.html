@@ -10,6 +10,8 @@
             --primary: #27ae60;
             --danger: #e74c3c;
             --dark: #2c3e50;
+            --accent: #2980b9;
+            --calistenia: #8e44ad;
         }
 
         * {
@@ -110,6 +112,17 @@
             margin-bottom: 15px;
         }
 
+        .info-box {
+            background: #e8f4f8;
+            border: 1px solid #b3e5fc;
+            color: #0277bd;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
         .list {
             list-style: none;
         }
@@ -129,7 +142,7 @@
             transform: translateX(3px);
         }
 
-        .list-item input {
+        .list-item input[type="checkbox"] {
             margin-right: 1rem;
             width: 20px;
             height: 20px;
@@ -221,25 +234,143 @@
             border-color: var(--primary);
             font-weight: bold;
         }
+
+        /* --- ESTILOS DA ABA NUTRIÇÃO --- */
+        .meal-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--primary);
+        }
+
+        .meal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .meal-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .opt-toggle {
+            display: flex;
+            gap: 5px;
+            background: #eee;
+            padding: 3px;
+            border-radius: 6px;
+        }
+
+        .opt-btn {
+            border: none;
+            background: transparent;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .opt-btn.active {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .food-group {
+            margin-top: 0.8rem;
+        }
+
+        .food-group-title {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .food-list {
+            list-style-type: disc;
+            padding-left: 1.2rem;
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        .food-list li {
+            margin-bottom: 3px;
+        }
+
+        .badge-farofa {
+            display: inline-block;
+            background: #fff3cd;
+            color: #856404;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 8px;
+            border: 1px solid #ffeeba;
+        }
+
+        details {
+            background: #fff;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        summary {
+            font-weight: bold;
+            color: var(--dark);
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .free-foods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 6px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #555;
+        }
+
+        .free-food-item {
+            background: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 4px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
     </style>
 </head>
 
 <body>
     <header>
-        <h1>📋 Tracker: Projeto 2024</h1>
-        <p style="font-size: 0.8rem; opacity: 0.8; margin-top: 5px;">Versão Segura (Sem Testa/Francês)</p>
+        <h1>📋 Tracker: Foco & Recuperação</h1>
+        <p style="font-size: 0.8rem; opacity: 0.8; margin-top: 5px;">Versão Otimizada (Segurança Cervical & Hipertrofia)
+        </p>
     </header>
 
     <div class="tabs">
         <div class="tab active" onclick="openTab('treino', this)">Treino (Gym)</div>
+        <div class="tab" onclick="openTab('calistenia', this)">Calistenia</div>
         <div class="tab" onclick="openTab('casa', this)">Mobilidade (Casa)</div>
-        <div class="tab" onclick="openTab('nutricao', this)">Nutrição</div>
+        <div class="tab" onclick="openTab('nutricao', this)">Nutrição (Plano PDF)</div>
     </div>
 
     <main>
+        <!-- ABA TREINO GYM -->
         <section id="treino" class="active">
             <div class="alert-box">
-                ⚠️ <strong>Dica de Ouro:</strong> No tríceps pulley, mantenha os ombros baixos (longe da orelha) para
+                ⚠️ <strong>Dica de Ouro:</strong> No tríceps e costas, mantenha os ombros baixos (longe da orelha) para
                 não ativar o trapézio/cervical.
             </div>
 
@@ -260,6 +391,23 @@
             </div>
         </section>
 
+        <!-- ABA CALISTENIA -->
+        <section id="calistenia">
+            <h2>Treino de Calistenia (Peso do Corpo)</h2>
+            <p class="subtitle">Exercícios para força, hipertrofia e controle corporal sem equipamentos pesados.</p>
+            <div class="progress-container">
+                <label><span id="calisteniaProgressText">0%</span> Concluído</label>
+                <progress id="calisteniaProgressBar" value="0" max="100"></progress>
+            </div>
+            <ul id="calistenia-list" class="list"></ul>
+            <div class="button-group">
+                <button
+                    onclick="clearList('calistenia-list', 'calisteniaDone', 'calisteniaProgressBar', 'calisteniaProgressText', calisteniaList)">Limpar
+                    Dia</button>
+            </div>
+        </section>
+
+        <!-- ABA MOBILIDADE CASA -->
         <section id="casa">
             <h2>Mobilidade e Core</h2>
             <p class="subtitle">Faça nos dias sem academia para aliviar a coluna.</p>
@@ -274,31 +422,227 @@
             </div>
         </section>
 
+        <!-- ABA NUTRIÇÃO -->
         <section id="nutricao">
-            <h2>Dieta de Superávit</h2>
+            <h2>Plano Alimentar de Superávit</h2>
+            <p class="subtitle">Consulta rápida das refeições, equivalências e substituições.</p>
+
+            <div class="info-box">
+                💡 <strong>Regras Gerais do Plano:</strong><br>
+                • Todos os alimentos pesados são <strong>depois de cozidos</strong>[cite: 1].<br>
+                • Mínimo de <strong>3 Litros de água</strong> por dia[cite: 1].<br>
+                • Café/chá sem açúcar e bebidas zero são livres[cite: 1].<br>
+                • Pode misturar fontes de carbo ou proteína desde que respeite a quantidade total[cite: 1].
+            </div>
+
             <div class="progress-container">
-                <label><span id="dietProgressText">0%</span></label>
+                <label><span id="dietProgressText">0%</span> Refeições Concluídas</label>
                 <progress id="dietProgressBar" value="0" max="100"></progress>
             </div>
-            <ul id="diet-list" class="list"></ul>
+
+            <!-- CAFÉ DA MANHÃ -->
+            <div class="meal-card">
+                <div class="meal-header">
+                    <span class="meal-title">☕ Café da Manhã</span>
+                    <div class="opt-toggle">
+                        <button class="opt-btn active" onclick="switchOption('cafe', 1, this)">Opção 1</button>
+                        <button class="opt-btn" onclick="switchOption('cafe', 2, this)">Opção 2</button>
+                    </div>
+                </div>
+
+                <div id="cafe-opt1">
+                    <div class="food-group">
+                        <div class="food-group-title">Escolha 1 Carboidrato:</div>
+                        <ul class="food-list">
+                            <li>2 pães de forma OU 1 pão francês OU 100g de cuscuz[cite: 1]</li>
+                        </ul>
+                    </div>
+                    <div class="food-group">
+                        <div class="food-group-title">Acompanhamento:</div>
+                        <ul class="food-list">
+                            <li>2 ovos de galinha[cite: 1]</li>
+                            <li>2 fatias de queijo da sua preferência[cite: 1]</li>
+                        </ul>
+                    </div>
+                    <div class="food-group">
+                        <div class="food-group-title">Vitamina:</div>
+                        <ul class="food-list">
+                            <li>200ml de leite integral + 30g pasta de amendoim + 1 banana + 1 col. sopa de aveia[cite:
+                                1]</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="cafe-opt2" style="display: none;">
+                    <div class="food-group">
+                        <div class="food-group-title">Pizza de Crepioca:</div>
+                        <ul class="food-list">
+                            <li>40g de tapioca + 2 ovos de galinha[cite: 1]</li>
+                            <li>2 fatias de mussarela + 3 fatias de tomate + temperos (orégano/sal)[cite: 1]</li>
+                        </ul>
+                    </div>
+                    <div class="food-group">
+                        <div class="food-group-title">Acompanhado de Vitamina:</div>
+                        <ul class="food-list">
+                            <li>200ml de leite integral + 30g pasta de amendoim + 1 banana + 1 col. sopa de aveia[cite:
+                                1]</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="margin-top: 10px;">
+                    <input type="checkbox" id="chk-cafe" onchange="toggleMealCheck('cafe')">
+                    <label for="chk-cafe" style="font-size: 0.85rem; font-weight: bold; cursor: pointer;"> Refeição
+                        Concluída</label>
+                </div>
+            </div>
+
+            <!-- ALMOÇO -->
+            <div class="meal-card">
+                <div class="meal-header">
+                    <span class="meal-title">🍲 Almoço</span>
+                </div>
+                <div class="food-group">
+                    <div class="food-group-title">Opções de Carboidratos (Escolher 1 cota total):</div>
+                    <ul class="food-list">
+                        <li>Arroz Branco ou Integral: 300g (6 colheres de servir)[cite: 1]</li>
+                        <li>Feijão: 300g (6 conchas de servir)[cite: 1]</li>
+                        <li>Macarrão (todos os tipos): 300g (6 colheres de servir)[cite: 1]</li>
+                        <li>Batata Doce, Mandioca, Inhame ou Batata-Baroa: 500g[cite: 1]</li>
+                        <li>Batata Inglesa Cozida: 500g (ou 350g na Air Fryer)[cite: 1]</li>
+                    </ul>
+                </div>
+
+                <div class="food-group">
+                    <div class="food-group-title">Opções de Proteínas (Escolher 1):</div>
+                    <ul class="food-list">
+                        <li>Frango, Carne Bovina Magra, Carne Suína Magra ou Peixe: 100g (1 filé grande)[cite: 1]</li>
+                    </ul>
+                </div>
+
+                <span class="badge-farofa">⚠️ Sempre comer acompanhado de 4 colheres de sopa de farofa pronta![cite:
+                    1]</span>
+
+                <div style="margin-top: 10px;">
+                    <input type="checkbox" id="chk-almoco" onchange="toggleMealCheck('almoco')">
+                    <label for="chk-almoco" style="font-size: 0.85rem; font-weight: bold; cursor: pointer;"> Refeição
+                        Concluída</label>
+                </div>
+            </div>
+
+            <!-- LANCHE DA TARDE -->
+            <div class="meal-card">
+                <div class="meal-header">
+                    <span class="meal-title">🥤 Lanche da Tarde</span>
+                    <div class="opt-toggle">
+                        <button class="opt-btn active" onclick="switchOption('lanche', 1, this)">Opção 1</button>
+                        <button class="opt-btn" onclick="switchOption('lanche', 2, this)">Opção 2</button>
+                    </div>
+                </div>
+
+                <div id="lanche-opt1">
+                    <div class="food-group">
+                        <div class="food-group-title">Vitamina Prática:</div>
+                        <ul class="food-list">
+                            <li>200ml de leite integral[cite: 1]</li>
+                            <li>2 colheres de sopa de aveia[cite: 1]</li>
+                            <li>30g de pasta de amendoim[cite: 1]</li>
+                            <li>1 banana[cite: 1]</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="lanche-opt2" style="display: none;">
+                    <div class="food-group">
+                        <div class="food-group-title">Hipercalórico:</div>
+                        <ul class="food-list">
+                            <li>200ml de leite integral[cite: 1]</li>
+                            <li>100g de hipercalórico[cite: 1]</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 10px;">
+                    <input type="checkbox" id="chk-lanche" onchange="toggleMealCheck('lanche')">
+                    <label for="chk-lanche" style="font-size: 0.85rem; font-weight: bold; cursor: pointer;"> Refeição
+                        Concluída</label>
+                </div>
+            </div>
+
+            <!-- JANTAR -->
+            <div class="meal-card">
+                <div class="meal-header">
+                    <span class="meal-title">🍽️ Jantar</span>
+                </div>
+                <div class="food-group">
+                    <div class="food-group-title">Opções de Carboidratos (Escolher 1 cota total):</div>
+                    <ul class="food-list">
+                        <li>Arroz Branco ou Integral: 250g (5 colheres de servir)[cite: 1]</li>
+                        <li>Feijão: 250g (5 colheres de servir)[cite: 1]</li>
+                        <li>Macarrão (todos os tipos): 250g (5 colheres de servir)[cite: 1]</li>
+                        <li>Batata Doce, Mandioca, Inhame, Batata Inglesa ou Batata-Baroa: 350g[cite: 1]</li>
+                    </ul>
+                </div>
+
+                <div class="food-group">
+                    <div class="food-group-title">Opções de Proteínas (Escolher 1):</div>
+                    <ul class="food-list">
+                        <li>Frango, Carne Bovina Magra, Carne Suína Magra ou Peixe: 100g (1 filé grande)[cite: 1]</li>
+                    </ul>
+                </div>
+
+                <span class="badge-farofa">⚠️ Sempre comer acompanhado de 4 colheres de sopa de farofa pronta![cite:
+                    1]</span>
+
+                <div style="margin-top: 10px;">
+                    <input type="checkbox" id="chk-jantar" onchange="toggleMealCheck('jantar')">
+                    <label for="chk-jantar" style="font-size: 0.85rem; font-weight: bold; cursor: pointer;"> Refeição
+                        Concluída</label>
+                </div>
+            </div>
+
+            <!-- LEGUMES E VERDURAS LIBERADOS -->
+            <details>
+                <summary>🥗 Legumes e Verduras (Comer à Vontade)[cite: 1]</summary>
+                <div class="free-foods-grid">
+                    <div class="free-food-item">Abobrinha</div>
+                    <div class="free-food-item">Acelga</div>
+                    <div class="free-food-item">Agrião</div>
+                    <div class="free-food-item">Alface</div>
+                    <div class="free-food-item">Aspargo</div>
+                    <div class="free-food-item">Berinjela</div>
+                    <div class="free-food-item">Beterraba</div>
+                    <div class="free-food-item">Brócolis</div>
+                    <div class="free-food-item">Cenoura</div>
+                    <div class="free-food-item">Cebola/Cebolinha</div>
+                    <div class="free-food-item">Chuchu</div>
+                    <div class="free-food-item">Cogumelos</div>
+                    <div class="free-food-item">Couve/Couve-flor</div>
+                    <div class="free-food-item">Espinafre</div>
+                    <div class="free-food-item">Pepino</div>
+                    <div class="free-food-item">Pimentão</div>
+                    <div class="free-food-item">Repolho/Rúcula</div>
+                    <div class="free-food-item">Tomate</div>
+                    <div class="free-food-item">Vagem</div>
+                </div>
+            </details>
+
             <div class="button-group">
-                <button
-                    onclick="clearList('diet-list', 'dietDone', 'dietProgressBar', 'dietProgressText', dietSchedule)">Limpar
-                    Dia</button>
+                <button onclick="clearDiet()">Limpar Refeições do Dia</button>
             </div>
         </section>
     </main>
 
     <script>
-        // --- DADOS ATUALIZADOS (TROCA DO TESTA PELO PULLEY BARRA) ---
+        // --- DATA TREINOS, CALISTENIA E CASA ---
         const treinoA = [
             { title: 'Supino Reto (Halter ou Barra)', detail: '3x10-12 (Cabeça apoiada! Foco peitoral)' },
             { title: 'Supino Inclinado (Halter)', detail: '3x10-12 (Preenche a parte superior do peito)' },
             { title: 'Crucifixo (Máquina ou Halter)', detail: '3x12-15 (Alongue bem o peito na descida)' },
             { title: 'Elevação Lateral', detail: '3x12-15 (Ombros largos. Não suba acima do ombro)' },
-            { title: 'Tríceps Corda', detail: '3x12-15 (Esmague o tríceps embaixo, abrindo a corda no final)' },
-            { title: 'Tríceps Pulley (Barra Reta)', detail: '3x12 (Em pé. Substitui o testa com segurança total)' },
-            { title: 'Prancha Abdominal', detail: '3x30-45s (Isometria para o core)' }
+            { title: 'Tríceps Corda (Polia)', detail: '3x12-15 (Esmague o tríceps embaixo, abrindo a corda)' },
+            { title: 'Tríceps Francês na Polia (Corda)', detail: '3x12 (Braços elevados, foco na extensão/alongamento)' },
+            { title: 'Prancha Abdominal', detail: '3x30-45s (Isometria para estabilização do core)' },
+            { title: 'Abdominal Infra ou Supra (Polia)', detail: '3x15 (Foco em hipertrofia abdominal com controle)' }
         ];
 
         const treinoB = [
@@ -314,13 +658,23 @@
 
         const treinoC = [
             { title: 'Leg Press 45º', detail: '3x10-12 (Pés na largura do ombro. Cabeça no encosto)' },
-            { title: 'Avanço (Passada)', detail: '3x10 cada perna (Cuidado com o equilíbrio)' },
+            { title: 'Afundo Estático com Halteres', detail: '3x10 cada perna (Braços esticados ao lado do corpo, tronco reto)' },
             { title: 'Cadeira Extensora', detail: '3x12-15 (Segure 1s lá em cima)' },
             { title: 'Mesa Flexora', detail: '3x12-15 (Foco no posterior de coxa)' },
-            { title: 'Cadeira Abdutora', detail: '3x15-20 (Para alargar o quadril)' },
-            { title: 'Elevação Pélvica', detail: '3x12-15 (Contraia forte o glúteo)' },
-            { title: 'Panturrilha Sentado', detail: '3x15-20 (Amplitude máxima)' },
-            { title: 'Panturrilha em Pé', detail: '3x15-20' }
+            { title: 'Cadeira Adutora', detail: '3x15-20 (Para preenchimento interno da coxa)' },
+            { title: 'Cadeira Abdutora', detail: '3x15-20 (Para alargar e estabilizar o quadril)' },
+            { title: 'Elevação Pélvica', detail: '3x12-15 (Contraia forte o glúteo no topo)' },
+            { title: 'Panturrilha Sentado/Polia 45º', detail: '3x15-20 (Joelhos estendidos, amplitude máxima)' }
+        ];
+
+        const calisteniaList = [
+            { title: 'Flexão de Braço (Inclinada ou Tradicional)', detail: '3x10-12 (Corpo alinhado em prancha, cotovelos a 45º)' },
+            { title: 'Flexão Diamante ou Fechada no Banco', detail: '3x10 (Foco em tríceps sem sobrecarregar o ombro)' },
+            { title: 'Agachamento Livre (Bodyweight)', detail: '3x15-20 (Pés bem apoiados, tronco ereto)' },
+            { title: 'Afundo Unilateral Estático', detail: '3x12 cada perna (Foco no equilíbrio e quadríceps/glúteo)' },
+            { title: 'Elevação Pélvica Unilateral no Chão', detail: '3x12 cada lado (Contraia forte o glúteo 2s no topo)' },
+            { title: 'Remada Invertida na Mesa/Barra (Inverted Row)', detail: '3x10 (Escápulas fechadas, fortalece as costas/postura)' },
+            { title: 'Panturrilha Unilateral no Degrau', detail: '3x15-20 cada perna (Alongue bem embaixo e suba no topo)' }
         ];
 
         const casaList = [
@@ -331,19 +685,9 @@
             { title: 'Abdominal Supra (Curto)', detail: '3x20 (Não puxe o pescoço)' }
         ];
 
-        const dietSchedule = [
-            { time: '06:00', title: 'Café da manhã', detail: 'Cuscuz + 3 ovos + café com leite' },
-            { time: '08:30', title: 'Lanche 1', detail: 'Banana + aveia + 2 scoops hipercalórico' },
-            { time: '10:30', title: 'Lanche 2', detail: 'Sanduíche atum/ricota + 1 scoop hipercalórico' },
-            { time: '12:30', title: 'Almoço', detail: 'Arroz + feijão + proteína + salada + azeite' },
-            { time: '15:30', title: 'Pós-refeição', detail: 'Whey + Creatina' },
-            { time: '17:30', title: 'Jantar (RU)', detail: 'Refeição completa + fruta' },
-            { time: '22:00', title: 'Ceia', detail: 'Mingau + hipercalórico + leite' }
-        ];
-
         let currentTreinoKey = 'treinoA';
 
-        // --- LÓGICA ---
+        // --- LÓGICA DE ABAS E RENDER ---
         function openTab(tabName, element) {
             document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
@@ -417,9 +761,56 @@
             renderGenericList(listId, data, key, bar, text);
         }
 
+        // --- LÓGICA ESPECÍFICA DA NUTRIÇÃO ---
+        function switchOption(meal, optNum, btnEl) {
+            const parentContainer = btnEl.closest('.opt-toggle');
+            parentContainer.querySelectorAll('.opt-btn').forEach(btn => btn.classList.remove('active'));
+            btnEl.classList.add('active');
+
+            if (optNum === 1) {
+                document.getElementById(`${meal}-opt1`).style.display = 'block';
+                document.getElementById(`${meal}-opt2`).style.display = 'none';
+            } else {
+                document.getElementById(`${meal}-opt1`).style.display = 'none';
+                document.getElementById(`${meal}-opt2`).style.display = 'block';
+            }
+        }
+
+        function toggleMealCheck(mealKey) {
+            const saved = JSON.parse(localStorage.getItem('pdfDietDone')) || {};
+            const chk = document.getElementById(`chk-${mealKey}`);
+            saved[mealKey] = chk.checked;
+            localStorage.setItem('pdfDietDone', JSON.stringify(saved));
+            updateDietProgress();
+        }
+
+        function updateDietProgress() {
+            const saved = JSON.parse(localStorage.getItem('pdfDietDone')) || {};
+            const totalMeals = 4;
+            let done = 0;
+            ['cafe', 'almoco', 'lanche', 'jantar'].forEach(m => {
+                const chk = document.getElementById(`chk-${m}`);
+                if (chk) {
+                    chk.checked = saved[m] || false;
+                    if (saved[m]) done++;
+                }
+            });
+
+            const pct = Math.round((done / totalMeals) * 100);
+            document.getElementById('dietProgressBar').value = pct;
+            document.getElementById('dietProgressText').innerText = pct + '%';
+        }
+
+        function clearDiet() {
+            localStorage.removeItem('pdfDietDone');
+            updateDietProgress();
+        }
+
+        // Inicializações
         renderTreino('A');
+        renderGenericList('calistenia-list', calisteniaList, 'calisteniaDone', 'calisteniaProgressBar', 'calisteniaProgressText');
         renderGenericList('casa-list', casaList, 'casaDone', 'casaProgressBar', 'casaProgressText');
-        renderGenericList('diet-list', dietSchedule, 'dietDone', 'dietProgressBar', 'dietProgressText');
+        updateDietProgress();
     </script>
 </body>
 
